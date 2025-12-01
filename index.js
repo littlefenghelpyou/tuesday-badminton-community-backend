@@ -81,6 +81,7 @@ app.post("/save-notification", async (req, res) => {
     title: title,
     body: body, // Use serverTimestamp() for an accurate, non-client-side generated timestamp
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    read: false,
   };
 
   try {
