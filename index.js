@@ -7,7 +7,12 @@ const PORT = 4000;
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 
-const serviceAccount = require("./tbc-testing-prod-firebase-adminsdk.json");
+// 🛑 OLD WAY (INSECURE)
+// const serviceAccount = require('./your-service-account-file.json');
+// const serviceAccount = require("./tbc-testing-prod-firebase-adminsdk.json");
+
+// ✅ NEW SECURE WAY: Read the single environment variable and parse it.
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
