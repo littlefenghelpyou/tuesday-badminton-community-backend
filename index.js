@@ -62,21 +62,42 @@ app.post("/send-notification", async (req, res) => {
   const splitedString = body.split("|");
   const modifiedTitle = splitedString.length > 1 ? splitedString[0] : "";
   const modifiedBody = splitedString.length > 1 ? splitedString[1] : "";
-
-  console.log("modifiedTitle -------------------->", modifiedTitle);
-  console.log("modifiedBody -------------------->", modifiedBody);
-
   const message = {
     notification: { title: modifiedTitle, body: modifiedBody },
     token,
   };
 
+  const notificationData = {
+    title: modifiedTitle,
+    body: modifiedBody, // Use serverTimestamp() for an accurate, non-client-side generated timestamp
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    read: false,
+    user_id: title,
+  };
+
   try {
-    const response = await admin.messaging().send(message);
-    res.status(200).json({ success: true, response });
+    // 1. Get a reference to the Firestore database
+    const db = admin.firestore(); // 2. Add the document to the 'notifications' collection
+
+    const docRef = await db.collection("notifications").add(notificationData);
+
+    console.log("Document successfully written with ID:", docRef.id); // 3. Send a success response back to the client
+
+    try {
+      const response = await admin.messaging().send(message);
+      res.status(200).json({ success: true, response });
+    } catch (error) {
+      console.error("Error sending message:", error);
+      res.status(500).json({ success: false, error });
+    }
   } catch (error) {
-    console.error("Error sending message:", error);
-    res.status(500).json({ success: false, error });
+    console.error("Error saving document to Firestore:", error); // 4. Send an error response
+
+    res.status(500).json({
+      success: false,
+      error: "Failed to save notification data.",
+      details: error.message,
+    });
   }
 });
 
