@@ -63,6 +63,9 @@ app.post("/send-notification", async (req, res) => {
   const modifiedTitle = splitedString.length > 1 ? splitedString[0] : "";
   const modifiedBody = splitedString.length > 1 ? splitedString[1] : "";
 
+  console.log("modifiedTitle -------------------->", modifiedTitle);
+  console.log("modifiedBody -------------------->", modifiedBody);
+
   const message = {
     notification: { title: modifiedTitle, body: modifiedBody },
     token,
