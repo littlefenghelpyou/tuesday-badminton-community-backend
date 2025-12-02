@@ -66,7 +66,7 @@ app.post("/send-notification", async (req, res) => {
   console.log("test ------------------>", splitedString);
 
   const message = {
-    notification: { title: modifiedTitle, body: modifiedBody },
+    notification: { title, body },
     token,
   };
 
