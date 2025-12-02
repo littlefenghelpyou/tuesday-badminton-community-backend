@@ -59,11 +59,12 @@ app.get("/", (req, res) => res.send("FCM Server is running"));
 app.post("/send-notification", async (req, res) => {
   const { token, title, body } = req.body;
 
-  console.log("title ------------------------>", title);
-  console.log("body ------------------------>", body);
+  const splitedString = body.split("|");
+  const modifiedTitle = splitedString.length > 2 ? splitedString[0] : "";
+  const modifiedBody = splitedString.length > 2 ? splitedString[1] : "";
 
   const message = {
-    notification: { title, body },
+    notification: { title: modifiedTitle, body: modifiedBody },
     token,
   };
 
