@@ -23,9 +23,9 @@ app.use(express.json());
 
 // Allow requests from React (http://localhost:3000)
 // app.use(cors({ origin: "http://localhost:3000" }));
-// app.use(cors({ origin: "https://tuesdaybadmintoncommunity.web.app" }));
+app.use(cors({ origin: "https://tuesdaybadmintoncommunity.web.app" }));
 // Testing server
-app.use(cors({ origin: "https://tbc-testing-prod.web.app" }));
+// app.use(cors({ origin: "https://tbc-testing-prod.web.app" }));
 
 app.post("/get", async (req, res) => {
   const { password } = req.body;
