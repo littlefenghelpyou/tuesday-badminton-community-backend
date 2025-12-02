@@ -59,6 +59,9 @@ app.get("/", (req, res) => res.send("FCM Server is running"));
 app.post("/send-notification", async (req, res) => {
   const { token, title, body } = req.body;
 
+  console.log("title ------------------------>", title);
+  console.log("body ------------------------>", body);
+
   const message = {
     notification: { title, body },
     token,
