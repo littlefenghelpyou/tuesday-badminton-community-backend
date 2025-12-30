@@ -24,6 +24,12 @@ app.use(express.json());
 // Allow requests from React (http://localhost:3000)
 // app.use(cors({ origin: "http://localhost:3000" }));
 app.use(cors({ origin: "https://tuesdaybadmintoncommunity.web.app" }));
+app.use(cors({
+  origin: [
+    "https://tuesdaybadmintoncommunity.web.app",
+    "https://tuesdaybadmintoncommunity-staging.web.app"
+  ]
+}));
 // Testing server
 // app.use(cors({ origin: "https://tbc-testing-prod.web.app" }));
 
